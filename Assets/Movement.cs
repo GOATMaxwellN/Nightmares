@@ -46,9 +46,6 @@ public class Movement : MonoBehaviour
         {
             downvelocity -= gravity * Time.deltaTime;
         }
-
-        //testing
-        print(rb.velocity);
     }
 
     private void FixedUpdate()
@@ -80,7 +77,7 @@ public class Movement : MonoBehaviour
 
         if (moving)
         {
-            rb.velocity = (movedirection.normalized * speed * 10f) + orientation.up * downvelocity;
+            rb.velocity = movedirection.normalized * speed * 10f + orientation.up * downvelocity;
         }
         else
         {
