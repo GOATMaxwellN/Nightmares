@@ -28,8 +28,8 @@ public class Headbob : MonoBehaviour
     private Vector3 FootStepMotion()
     {
         Vector3 pos = Vector3.zero;
-        pos.y += Mathf.Sin(Time.time * _frequency) * _Amplitude * 1.5f; //vert
-        pos.x += Mathf.Cos(Time.time * _frequency / 2) * _Amplitude; //hori
+        pos.y += Mathf.Sin(Time.time * _frequency) * _Amplitude * 1.35f; //vert
+        pos.x += Mathf.Cos(Time.time * _frequency / 2) * _Amplitude * 0.25f; //hori
         return pos;
     }
     private Vector3 StandMotion()
