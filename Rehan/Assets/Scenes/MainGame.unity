@@ -558,7 +558,7 @@ MonoBehaviour:
   gotimetext: {fileID: 2124302243}
   fearlevel: 1
   bpm: 1
-  health: 1
+  health: 8
   maxhealth: 8
   hurtpanel: {fileID: 1977108082}
   scoretext: {fileID: 339979479}
@@ -1418,11 +1418,11 @@ RectTransform:
   - {fileID: 1265882533}
   - {fileID: 1366996111}
   - {fileID: 1948704006}
-  - {fileID: 1187177614}
-  - {fileID: 994384925}
   - {fileID: 339979478}
   - {fileID: 1240990859}
   - {fileID: 1977108081}
+  - {fileID: 1187177614}
+  - {fileID: 994384925}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -13160,7 +13160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -24.2, y: -23.8}
+  m_AnchoredPosition: {x: -24.199951, y: -23.799988}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1265882534
@@ -14815,7 +14815,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1905596046}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 

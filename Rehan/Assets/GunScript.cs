@@ -23,7 +23,7 @@ public class GunScript : MonoBehaviour
     public UnityEngine.UI.Image reloadicon;
     [SerializeField] private float bulletspread = 0.01f;
     private int fearlevel;
-    
+
     [SerializeField] private int chamber;
     public int bullet;
     public UnityEngine.UI.Image[] bullets;
@@ -38,6 +38,7 @@ public class GunScript : MonoBehaviour
     public float ssduration = 1f;
 
     [SerializeField] private UnityEngine.UI.Image crosshair;
+    private Vector2 initialsize;
 
     void Start()
     {
@@ -46,6 +47,7 @@ public class GunScript : MonoBehaviour
         cam = Camera.main;
         reloadicon.color = new Color(0.7f, 0, 0.15f);
         reloadicon.enabled = false;
+        initialsize = crosshair.rectTransform.sizeDelta;
     }
 
     void Update()
@@ -54,7 +56,7 @@ public class GunScript : MonoBehaviour
 
         if (reloading) return;
 
-        if (bullet <= 0 )
+        if (bullet <= 0)
         {
             StartCoroutine(Reload());
             return;
@@ -77,7 +79,7 @@ public class GunScript : MonoBehaviour
             timeoflastshot = 0f;
             Shoot();
         }
-        else if (Input.GetKeyDown(KeyCode.R) && bullet<chamber)
+        else if (Input.GetKeyDown(KeyCode.R) && bullet < chamber)
         {
             StartCoroutine(Reload());
             return;
@@ -101,10 +103,10 @@ public class GunScript : MonoBehaviour
     {
         reloading = true;
         reloadicon.enabled = false;
-        yield return new WaitForSeconds(reloadtime/2);
+        yield return new WaitForSeconds(reloadtime / 2);
         gun.GetComponent<Animator>().Play("Reload");
         reloadsource.PlayOneShot(revolverreload);
-        yield return new WaitForSeconds(reloadtime/2);
+        yield return new WaitForSeconds(reloadtime / 2);
         gun.GetComponent<Animator>().Play("New State");
         bullet = chamber;
         reloading = false;
@@ -115,7 +117,7 @@ public class GunScript : MonoBehaviour
 
         if (Player.TryGetComponent(out Health player))
         {
-            fearlevel = player.getfear();
+            fearlevel = Math.Abs(player.getfear());
         }
 
         bullet--;
@@ -125,9 +127,9 @@ public class GunScript : MonoBehaviour
         StartCoroutine(CursorExpand());
         gunsoundsource.PlayOneShot(revolvershot);
 
-
+        firerate = 1 * (float)Math.Pow(1.175, fearlevel);
         Vector3 bulletdirection = cam.transform.forward;
-        float spread = bulletspread * (float)Math.Pow(1.175, fearlevel);
+        float spread = bulletspread * (float)Math.Pow(1.25, fearlevel);
         bulletdirection += new Vector3(
             UnityEngine.Random.Range(-spread, spread),
             UnityEngine.Random.Range(-spread, spread),
@@ -166,7 +168,7 @@ public class GunScript : MonoBehaviour
             trail.transform.position += dir * bulletspd;
             time += Time.deltaTime;
             yield return null;
-            
+
         }
 
         Destroy(trail.gameObject);
@@ -175,7 +177,7 @@ public class GunScript : MonoBehaviour
     IEnumerator StartRecoil()
     {
         gun.GetComponent<Animator>().Play("Recoil");
-        yield return new WaitForSeconds((1 / firerate)*0.9f);
+        yield return new WaitForSeconds((1 / firerate) * 0.9f);
         gun.GetComponent<Animator>().Play("New State");
     }
 
@@ -186,7 +188,7 @@ public class GunScript : MonoBehaviour
         while (elapsedtime < ssduration)
         {
             elapsedtime += Time.deltaTime;
-            float strength = sscurve.Evaluate(elapsedtime/ssduration);
+            float strength = sscurve.Evaluate(elapsedtime / ssduration);
             cam.transform.position = camholder.position + UnityEngine.Random.insideUnitSphere * strength;
             yield return null;
         }
@@ -195,12 +197,11 @@ public class GunScript : MonoBehaviour
     IEnumerator CursorExpand()
     {
         float elapsedtime = 0f;
-        Vector2 initialsize = crosshair.rectTransform.sizeDelta;
 
-        while (elapsedtime < ssduration/3)
+        while (elapsedtime < ssduration / 3)
         {
             elapsedtime += Time.deltaTime;
-            float strength = sscurve.Evaluate(elapsedtime / ssduration)*50f;
+            float strength = sscurve.Evaluate(elapsedtime / ssduration) * 50f;
             crosshair.rectTransform.sizeDelta = initialsize + new Vector2(strength, strength);
             yield return null;
         }
