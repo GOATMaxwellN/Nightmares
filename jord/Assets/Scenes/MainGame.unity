@@ -291,6 +291,54 @@ AudioReverbFilter:
   m_LFReference: 250
   m_ReflectionsDelay: 0
   m_ReverbPreset: 27
+--- !u!1 &54238978
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 54238980}
+  - component: {fileID: 54238979}
+  m_Layer: 0
+  m_Name: ArduinoConnection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &54238979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54238978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff318ce1dcb90a4b8d3cbe2c1f90427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 63200607}
+  receivedstring: 
+  bpm: 0
+  fearLevel: 0
+--- !u!4 &54238980
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54238978}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.8295908, y: 20.965199, z: 13.469143}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &57847751
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,6 +474,7 @@ GameObject:
   - component: {fileID: 63200611}
   - component: {fileID: 63200613}
   - component: {fileID: 63200614}
+  - component: {fileID: 63200615}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -571,6 +620,22 @@ MonoBehaviour:
   - {fileID: 407173886}
   bpmtext: {fileID: 1357686390}
   heartbeat: {fileID: 52250520}
+--- !u!114 &63200615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63200607}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff318ce1dcb90a4b8d3cbe2c1f90427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  receivedstring: 
+  bpm: 15
+  fearLevel: 0
 --- !u!1 &166623835
 GameObject:
   m_ObjectHideFlags: 0
@@ -15072,3 +15137,4 @@ SceneRoots:
   - {fileID: 1695886907}
   - {fileID: 1761949957}
   - {fileID: 737896837}
+  - {fileID: 54238980}
