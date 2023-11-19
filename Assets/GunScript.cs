@@ -18,10 +18,14 @@ public class GunScript : MonoBehaviour
     [SerializeField] private LayerMask enemylayer;
     [SerializeField] private float damage;
     [SerializeField] private float firerate;
-    [SerializeField] private int chamber;
-    private int bullets;
     [SerializeField] private float reloadtime = 1f;
     private bool reloading = false;
+    public UnityEngine.UI.Image reloadicon;
+
+    [SerializeField] private int chamber;
+    public int bullet;
+    public UnityEngine.UI.Image[] bullets;
+
 
     private float timebeforeshooting;
     private float timeoflastshot = 0f;
@@ -34,9 +38,11 @@ public class GunScript : MonoBehaviour
 
     void Start()
     {
-        bullets = chamber;
+        bullet = chamber;
         timebeforeshooting = 1 / firerate;
         cam = Camera.main;
+        reloadicon.color = new Color(0.7f, 0, 0.15f);
+        reloadicon.enabled = false;
     }
 
     void Update()
@@ -45,7 +51,7 @@ public class GunScript : MonoBehaviour
 
         if (reloading) return;
 
-        if (bullets <= 0 )
+        if (bullet <= 0 )
         {
             StartCoroutine(Reload());
             return;
@@ -68,7 +74,7 @@ public class GunScript : MonoBehaviour
             timeoflastshot = 0f;
             Shoot();
         }
-        else if (Input.GetKeyDown(KeyCode.R) && bullets<chamber)
+        else if (Input.GetKeyDown(KeyCode.R) && bullet<chamber)
         {
             StartCoroutine(Reload());
             return;
@@ -77,21 +83,33 @@ public class GunScript : MonoBehaviour
         {
             timebeforeshooting -= Time.deltaTime;
         }
+
+        // UI update
+        for (int i = 0; i < bullets.Length; i++)
+        {
+            if (i < bullet) { bullets[i].color = new Color(0.7f, 0, 0.15f); }
+            else { bullets[i].color = new Color(0, 0, 0); }
+
+        }
+        if (bullet != bullets.Length && reloading == false) { reloadicon.enabled = true; }
     }
 
     IEnumerator Reload()
     {
         reloading = true;
-        yield return new WaitForSeconds(reloadtime*2/3);
+        reloadicon.enabled = false;
+        yield return new WaitForSeconds(reloadtime/2);
+        gun.GetComponent<Animator>().Play("Reload");
         reloadsource.PlayOneShot(revolverreload);
-        yield return new WaitForSeconds(reloadtime/3);
-        bullets = chamber;
+        yield return new WaitForSeconds(reloadtime/2);
+        gun.GetComponent<Animator>().Play("New State");
+        bullet = chamber;
         reloading = false;
     }
 
     private void Shoot()
     {
-        bullets--;
+        bullet--;
         muzzleflash.Play();
         StartCoroutine(StartRecoil());
         StartCoroutine(ScreenShake());
@@ -101,10 +119,9 @@ public class GunScript : MonoBehaviour
         Ray gunray = new Ray(cam.transform.position, cam.transform.forward);
         if (Physics.Raycast(gunray, out RaycastHit hitInfo, 150f, enemylayer))
         {
-            if (hitInfo.collider.gameObject.TryGetComponent(out EnemyScript enemyhit))
+            if (hitInfo.collider.gameObject.TryGetComponent(out EnemyHealth enemyhit))
             {
                 enemyhit.takedamage(damage);
-                print("HIT");
             }
         }
     }

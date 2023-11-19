@@ -10,6 +10,8 @@ public class Movement : MonoBehaviour
     public float grounddrag;
     private bool moving;
 
+    public GameObject footstep;
+
     // Grounded
     public float playerheight;
     public LayerMask whatisground;
@@ -31,6 +33,7 @@ public class Movement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        footstep.SetActive(false);
     }
 
     private void Update()
@@ -78,11 +81,23 @@ public class Movement : MonoBehaviour
         if (moving)
         {
             rb.velocity = movedirection.normalized * speed * 10f + orientation.up * downvelocity;
+            footsteps();
         }
         else
         {
             rb.velocity = Vector3.zero + orientation.up * downvelocity;
+            stopfootsteps();
         }
         
+    }
+
+    private void footsteps()
+    {
+        footstep.SetActive(true);
+    }
+
+    private void stopfootsteps()
+    {
+        footstep.SetActive(false);
     }
 }
