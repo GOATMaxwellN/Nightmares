@@ -75,9 +75,19 @@ public class Health : MonoBehaviour
 
     }
 
+    public void setfear(int newfear)
+    {
+        fearlevel = newfear;
+    }
+
     public int getfear()
     {
         return fearlevel;
+    }
+
+    public void setbpm(int newbpm)
+    {
+        bpm = newbpm;
     }
 
     public void addscore(int scoreadd)
