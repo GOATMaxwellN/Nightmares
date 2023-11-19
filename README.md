@@ -1,2 +1,2 @@
 # Nightmares
-Game that uses real time brain data to keep you engaged.
+Game that uses real time heart data to provide an adaptive game experience.
