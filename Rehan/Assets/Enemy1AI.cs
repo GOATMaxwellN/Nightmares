@@ -35,7 +35,7 @@ public class Enemy1AI : MonoBehaviour
         if (Vector3.Distance(transform.position, Playertransform.position) >= attackrange)
         {
             // move to player
-            if (rb.velocity.magnitude <= movespeed)
+            if (rb.velocity.magnitude <= movespeed && Time.timeScale != 0)
             {
                 movevector = (Playertransform.position - transform.position).normalized;
                 rb.AddForce(movevector * movespeed * Time.fixedDeltaTime * 10f);
