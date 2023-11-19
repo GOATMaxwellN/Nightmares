@@ -18,7 +18,7 @@ for p in ports:
         
         while True:
             BMP = arduino.readline().decode("utf-8").rstrip()
-            if BMP and eval(BMP) > 60: print(BMP, f"Fear level: {round((0.11*float(BMP)-6.6))}") #we take 200 as the max since the sensor has error of +-20 BPM
+            if BMP and eval(BMP) > 60: print(BMP, f"Fear level: {round((0.0909*float(BMP)-5.4545))}") #we take 200 as the max since the sensor has error of +-20 BPM
         
     except serial.SerialException as e:
         print("Error in serial communication:", e)
