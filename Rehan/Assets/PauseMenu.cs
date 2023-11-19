@@ -15,6 +15,7 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         ResumeGame();
+        menu = false;
     }
 
     // Update is called once per frame
@@ -25,11 +26,17 @@ public class PauseMenu : MonoBehaviour
             if (menu == false)
             {
                 PauseGame();
+                menu = true;
             }
             else
             {
                 ResumeGame();
+                menu = false;
             }
+        }
+        else if (Input.GetKeyDown(KeyCode.M) && menu == true )
+        {
+            MainMenu();
         }
     }
 
@@ -40,7 +47,6 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = true;
         Time.timeScale = 0;
         AudioListener.volume = 0;
-        menu = true;
     }
 
     public void ResumeGame()
@@ -50,7 +56,6 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = false;
         Time.timeScale = 1;
         AudioListener.volume = 1;
-        menu = false;
     }
 
     public void MainMenu()

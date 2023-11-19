@@ -1,15 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
+    private PauseMenu pauseMenuclass;
+
+    [SerializeField] private GameObject gameoverpanel;
+
+    [SerializeField] private UnityEngine.UI.Text goscoretext;
+    [SerializeField] private UnityEngine.UI.Text gotimetext;
+
     public int fearlevel = 1;
     public int bpm = 1;
 
     public int health;
     public int maxhealth;
+    private bool dead = false;
     public UnityEngine.UI.Image hurtpanel;
     private float hurtfade = .75f;
     private float currenthurtfade = -1.0f;
@@ -58,6 +68,11 @@ public class Health : MonoBehaviour
             hurtpanel.color = new Color(hurtpanel.color.r, hurtpanel.color.g, hurtpanel.color.b, 0.25f * currenthurtfade/hurtfade);
         }
 
+        if (Input.GetKeyDown(KeyCode.M) && dead == true)
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+
     }
 
     public void takedamage(int damage)
@@ -66,7 +81,7 @@ public class Health : MonoBehaviour
 
         if (health <= 0.01f)
         {
-            // play death
+            StartCoroutine(GameOverScreen());
         }
         else
         {
@@ -75,6 +90,17 @@ public class Health : MonoBehaviour
 
     }
 
+    IEnumerator GameOverScreen()
+    {
+        yield return new WaitForSeconds(1);
+        dead = true;
+        scoretext.enabled = false;
+        timetext.enabled = false;
+
+        goscoretext.text = "SCORE : " + score.ToString();
+        gotimetext.text = "TIME : " + timer(timeelapsed);
+        PauseGame();
+    }
     public int getfear()
     {
         return fearlevel;
@@ -92,6 +118,15 @@ public class Health : MonoBehaviour
         int minutes = Mathf.FloorToInt(elapsedtime / 60F);
         int seconds = Mathf.FloorToInt(elapsedtime % 60F);
         return hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
+    }
+
+    private void PauseGame()
+    {
+        gameoverpanel.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Time.timeScale = 0;
+        AudioListener.volume = 0;
     }
 
 }
